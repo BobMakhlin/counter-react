@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import Counter from "./counter/Counter";
+import Counter from "./components/counter/Counter";
 
 const App = () => {
   const initialState = {
