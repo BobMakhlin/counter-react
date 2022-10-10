@@ -1,63 +1,57 @@
-import React from "react";
+import { useState } from "react";
 import "./App.css";
-import { Counter } from "./counter/Counter";
+import Counter from "./counter/Counter";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [
-        { id: 1, name: "Apple", count: 1 },
-        { id: 2, name: "Watermelon", count: 0 },
-        { id: 3, name: "Pear", count: 3 },
-      ],
-    };
-  }
+const App = () => {
+  const initialState = {
+    products: [
+      { id: 1, name: "Apple", count: 1 },
+      { id: 2, name: "Watermelon", count: 0 },
+      { id: 3, name: "Pear", count: 3 },
+    ],
+  };
+  const [state, setState] = useState(initialState);
 
-  render() {
-    return (
-      <div className="App">
-        <div className="counters">{this.createCounters()}</div>
-      </div>
-    );
-  }
-
-  createCounters() {
-    return this.state.products.map((product) => (
-      <div key={product.id}>
-        <Counter
-          label={product.name}
-          value={product.count}
-          onDecrease={() => this.handleDecrease(product.id)}
-          onIncrease={() => this.handleIncrease(product.id)}
-        />
-      </div>
-    ));
-  }
-
-  handleDecrease = (id) => {
+  const handleDecrease = (id) => {
     console.log("handleDecrease(). id:", id);
 
-    const index = this.state.products.findIndex((x) => x.id === id);
-    const productsCopy = [...this.state.products];
+    const index = state.products.findIndex((x) => x.id === id);
+    const productsCopy = [...state.products];
     const productCopy = { ...productsCopy[index] };
     productCopy.count--;
     productsCopy[index] = productCopy;
 
-    this.setState({ products: productsCopy });
+    setState({ products: productsCopy });
   };
 
-  handleIncrease = (id) => {
+  const handleIncrease = (id) => {
     console.log("handleIncrease(). id:", id);
 
-    const index = this.state.products.findIndex((x) => x.id === id);
-    const productsCopy = [...this.state.products];
+    const index = state.products.findIndex((x) => x.id === id);
+    const productsCopy = [...state.products];
     const productCopy = { ...productsCopy[index] };
     productCopy.count++;
     productsCopy[index] = productCopy;
 
-    this.setState({ products: productsCopy });
+    setState({ products: productsCopy });
   };
-}
+
+  const counters = state.products.map((product) => (
+    <div key={product.id}>
+      <Counter
+        label={product.name}
+        value={product.count}
+        onDecrease={() => handleDecrease(product.id)}
+        onIncrease={() => handleIncrease(product.id)}
+      />
+    </div>
+  ));
+
+  return (
+    <div className="App">
+      <div className="counters">{counters}</div>
+    </div>
+  );
+};
 
 export default App;
