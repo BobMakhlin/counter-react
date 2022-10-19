@@ -12,25 +12,29 @@ const App = () => {
   const handleDecrease = (id) => {
     console.log("handleDecrease(). id:", id);
 
-    const index = products.findIndex((x) => x.id === id);
-    const productsCopy = [...products];
-    const productCopy = { ...productsCopy[index] };
-    productCopy.count--;
-    productsCopy[index] = productCopy;
+    setProducts((prevProducts) => {
+      const index = prevProducts.findIndex((x) => x.id === id);
+      const productsCopy = [...prevProducts];
+      const productCopy = { ...productsCopy[index] };
+      productCopy.count--;
+      productsCopy[index] = productCopy;
 
-    setProducts(productsCopy);
+      return productsCopy;
+    });
   };
 
   const handleIncrease = (id) => {
     console.log("handleIncrease(). id:", id);
 
-    const index = products.findIndex((x) => x.id === id);
-    const productsCopy = [...products];
-    const productCopy = { ...productsCopy[index] };
-    productCopy.count++;
-    productsCopy[index] = productCopy;
+    setProducts((prevProducts) => {
+      const index = prevProducts.findIndex((x) => x.id === id);
+      const productsCopy = [...prevProducts];
+      const productCopy = { ...productsCopy[index] };
+      productCopy.count++;
+      productsCopy[index] = productCopy;
 
-    setProducts(productsCopy);
+      return productsCopy;
+    });
   };
 
   const counters = products.map((product) => (
